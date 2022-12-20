@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # Variables
-resourceGroup="acdnd-c4-project"
+resourceGroup="c4-project-tungtt44"
 clusterName="udacity-cluster"
-
+# acrname=tungtt44acrproject4
+# loginServer=tungtt44acrproject4.azurecr.io
 # Install aks cli
 echo "Installing AKS CLI"
 
@@ -24,17 +25,17 @@ az aks create \
 --generate-ssh-keys
 
 # For Cloud Lab users
-az aks create \
---resource-group $resourceGroup \
---name $clusterName \
---node-count 1 \
---generate-ssh-keys
+# az aks create \
+# --resource-group $resourceGroup \
+# --name $clusterName \
+# --node-count 1 \
+# --generate-ssh-keys
 
 # For Cloud Lab users
 # This command will is a substitute for "--enable-addons monitoring" option in the "az aks create"
 # Use the log analytics workspace - Resource ID
 # For Cloud Lab users, go to the existing Log Analytics workspace --> Properties --> Resource ID. Copy it and use in the command below.
-az aks enable-addons -a monitoring -n $clusterName -g $resourceGroup --workspace-resource-id "/subscriptions/6c39f60b-2bb1-4e37-ad64-faaf30beaca4/resourcegroups/cloud-demo-153430/providers/microsoft.operationalinsights/workspaces/loganalytics-153430"
+# az aks enable-addons -a monitoring -n $clusterName -g $resourceGroup --workspace-resource-id "/subscriptions/6c39f60b-2bb1-4e37-ad64-faaf30beaca4/resourcegroups/cloud-demo-153430/providers/microsoft.operationalinsights/workspaces/loganalytics-153430"
 
 echo "AKS cluster created: $clusterName"
 
