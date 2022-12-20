@@ -43,7 +43,7 @@ view_manager.register_exporter(exporter)
 # Tracing
 tracer = Tracer(
     exporter=AzureExporter(
-        onnection_string='InstrumentationKey=c0b6d8c2-9c38-4579-bb60-ccf199fa596b'),
+        connection_string='InstrumentationKey=c0b6d8c2-9c38-4579-bb60-ccf199fa596b'),
         sampler=ProbabilitySampler(1.0)
         )
 
