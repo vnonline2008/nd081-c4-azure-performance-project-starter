@@ -8,15 +8,10 @@ import logging
 from datetime import datetime
 
 # App Insights
-# TODO: Import required libraries for App Insights
 from opencensus.ext.azure.log_exporter import AzureLogHandler
 from opencensus.ext.azure.log_exporter import AzureEventHandler
 from opencensus.ext.azure import metrics_exporter
-from opencensus.stats import aggregation as aggregation_module
-from opencensus.stats import measure as measure_module
 from opencensus.stats import stats as stats_module
-from opencensus.stats import view as view_module
-from opencensus.tags import tag_map as tag_map_module
 from opencensus.trace import config_integration
 from opencensus.ext.azure.trace_exporter import AzureExporter
 from opencensus.trace.samplers import ProbabilitySampler
@@ -25,7 +20,6 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 
 # Logging
 config_integration.trace_integrations(['logging'])
-config_integration.trace_integrations(['requests'])
 logger = logging.getLogger(__name__)
 handler = AzureLogHandler(connection_string='InstrumentationKey=c0b6d8c2-9c38-4579-bb60-ccf199fa596b')
 handler.setFormatter(logging.Formatter('%(traceId)s %(spanId)s %(message)s'))
@@ -133,6 +127,6 @@ def index():
 
 if __name__ == "__main__":
     # TODO: Use the statement below when running locally
-    # app.run() 
+    app.run() 
     # TODO: Use the statement below before deployment to VMSS
-    app.run(host='0.0.0.0', threaded=True, debug=True) # remote
+    # app.run(host='0.0.0.0', threaded=True, debug=True) # remote
