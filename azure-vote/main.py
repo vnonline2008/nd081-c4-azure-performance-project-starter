@@ -103,14 +103,10 @@ def index():
             r.set(button1,0)
             r.set(button2,0)
             vote1 = r.get(button1).decode('utf-8')
-            with tracer.span(name="Cats Vote") as span:
-                print("Post Cats Vote")
             properties = {'custom_dimensions': {'Cats Vote': vote1}}
             logger.info('Cats Vote', extra=properties)
 
             vote2 = r.get(button2).decode('utf-8')
-            with tracer.span(name="Dogs Vote") as span:
-                print("Post Dogs Vote")
             properties = {'custom_dimensions': {'Dogs Vote': vote2}}
             logger.info('Dogs Vote', extra=properties)
 
@@ -124,13 +120,17 @@ def index():
 
             # Get current values
             vote1 = r.get(button1).decode('utf-8')
+            with tracer.span(name="Cats Vote") as span:
+                print("Post Cats Vote")
             vote2 = r.get(button2).decode('utf-8')
+            with tracer.span(name="Dogs Vote") as span:
+                print("Post Dogs Vote")
 
             # Return results
             return render_template("index.html", value1=int(vote1), value2=int(vote2), button1=button1, button2=button2, title=title)
 
 if __name__ == "__main__":
     # TODO: Use the statement below when running locally
-    app.run() 
+    # app.run() 
     # TODO: Use the statement below before deployment to VMSS
-    # app.run(host='0.0.0.0', threaded=True, debug=True) # remote
+    app.run(host='0.0.0.0', threaded=True, debug=True) # remote
