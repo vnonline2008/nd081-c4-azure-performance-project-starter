@@ -5,18 +5,13 @@ import redis
 import socket
 import sys
 import logging
-from datetime import datetime
 
 # App Insights
 # TODO: Import required libraries for App Insights
 from opencensus.ext.azure.log_exporter import AzureLogHandler
 from opencensus.ext.azure.log_exporter import AzureEventHandler
 from opencensus.ext.azure import metrics_exporter
-from opencensus.stats import aggregation as aggregation_module
-from opencensus.stats import measure as measure_module
 from opencensus.stats import stats as stats_module
-from opencensus.stats import view as view_module
-from opencensus.tags import tag_map as tag_map_module
 from opencensus.trace import config_integration
 from opencensus.ext.azure.trace_exporter import AzureExporter
 from opencensus.trace.samplers import ProbabilitySampler
@@ -25,10 +20,8 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 
 # Logging
 config_integration.trace_integrations(['logging'])
-config_integration.trace_integrations(['requests'])
 logger = logging.getLogger(__name__)
 handler = AzureLogHandler(connection_string='InstrumentationKey=c0b6d8c2-9c38-4579-bb60-ccf199fa596b')
-handler.setFormatter(logging.Formatter('%(traceId)s %(spanId)s %(message)s'))
 logger.addHandler(handler)
 logger.addHandler(AzureEventHandler(connection_string='InstrumentationKey=c0b6d8c2-9c38-4579-bb60-ccf199fa596b'))
 logger.setLevel(logging.INFO)
@@ -139,7 +132,6 @@ def index():
             logger.info('Cats Vote', extra=properties)
 
             vote2 = r.get(button2).decode('utf-8')
-            
             properties = {'custom_dimensions': {'Dogs Vote': vote2}}
             logger.info('Dogs Vote', extra=properties)
 
@@ -147,7 +139,4 @@ def index():
             return render_template("index.html", value1=int(vote1), value2=int(vote2), button1=button1, button2=button2, title=title)
 
 if __name__ == "__main__":
-    # TODO: Use the statement below when running locally
-    # app.run() 
-    # TODO: Use the statement below before deployment to VMSS
     app.run(host='0.0.0.0', threaded=True, debug=True) # remote
