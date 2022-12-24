@@ -5,7 +5,6 @@ import redis
 import socket
 import sys
 import logging
-from datetime import datetime
 
 # App Insights
 from opencensus.ext.azure.log_exporter import AzureLogHandler
@@ -22,7 +21,6 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 config_integration.trace_integrations(['logging'])
 logger = logging.getLogger(__name__)
 handler = AzureLogHandler(connection_string='InstrumentationKey=c0b6d8c2-9c38-4579-bb60-ccf199fa596b')
-handler.setFormatter(logging.Formatter('%(traceId)s %(spanId)s %(message)s'))
 logger.addHandler(handler)
 logger.addHandler(AzureEventHandler(connection_string='InstrumentationKey=c0b6d8c2-9c38-4579-bb60-ccf199fa596b'))
 logger.setLevel(logging.INFO)
@@ -130,7 +128,4 @@ def index():
             return render_template("index.html", value1=int(vote1), value2=int(vote2), button1=button1, button2=button2, title=title)
 
 if __name__ == "__main__":
-    # TODO: Use the statement below when running locally
-    # app.run() 
-    # TODO: Use the statement below before deployment to VMSS
     app.run(host='0.0.0.0', threaded=True, debug=True) # remote
